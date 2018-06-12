@@ -1,0 +1,5 @@
+<Scene>
+  <Import-Scene Path="robot-control-common.scene"/>
+  <Objects>
+   </Objects>
+</Scene>

@@ -1,0 +1,65 @@
+<Scene>
+  <Camera>
+    <Simple-Camera Name="Main-camera">
+      <Transform>
+        <Translation>
+          <X>0.0</X>
+          <Y>10.0</Y>
+          <Z>10.0</Z>
+        </Translation>
+        <Rotation>
+          <Yaw>1.52</Yaw>
+          <Pitch>1.0</Pitch>
+        </Rotation>
+      </Transform>
+    </Simple-Camera>
+  </Camera>
+  <Light Name="Main-light">
+    <Directional-Light>
+      <Direction>
+        <X>0.577</X>
+        <Y>0.577</Y>
+        <Z>0.577</Z>
+      </Direction>
+      <Ambient>
+        <R>0.2</R>
+        <G>0.2</G>
+        <B>0.2</B>
+      </Ambient>
+      <Diffuse>
+        <R>1.0</R>
+        <G>1.0</G>
+        <B>1.0</B>
+      </Diffuse>
+      <Specular>
+        <R>0.0</R>
+        <G>0.0</G>
+        <B>0.0</B>
+      </Specular>
+    </Directional-Light>
+  </Light>
+  <Objects>
+    <Box Name="Floor" TexCoordMultFactor="3">
+      <Material>
+        <Simple-TL-Material>
+          <Texture>
+            <Path>concrete1.png</Path>
+          </Texture>
+        </Simple-TL-Material>
+      </Material>
+      <Transform>
+        <Scale>
+          <X>20</X>
+          <Y>0.1</Y>
+          <Z>20</Z>
+        </Scale>
+        <Translation>
+          <X>9.5</X>
+          <Y>-0.1</Y>
+          <Z>9.5</Z>
+        </Translation>
+      </Transform>
+    </Box>
+
+  </Objects>
+</Scene>
