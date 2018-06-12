@@ -18,6 +18,7 @@
 #include "RobotMind.h"
 #define TIME_STEP 0.6
 
+
 int main(int argc, char** argv)
 {
 	CRenderer* pRenderer = 0;
@@ -36,50 +37,66 @@ int main(int argc, char** argv)
 
 	CTimer drawingTimer;
 	CTimer decisionTimer;
+	CTimer timeFromStart;
 	double dt = 0.0;
+
 
 	drawingTimer.start();
 	decisionTimer.start();
+	timeFromStart.start();
 
 	CGraphicObject* pRobot = pRenderer->getObjectByName("Robot");
 
 	double t = 0.0;
 
-	C2DText* pFPSText = new C2DText(string("fps"), Vector2D(0.05, 0.95), 0);
-	pRenderer->add2DGraphicObject(pFPSText);
+	C2DText* pStateText = new C2DText(string(""), Vector2D(0.05, 0.95), 0);
+	pRenderer->add2DGraphicObject(pStateText);
 	C2DText* pDirection = new C2DText("", Vector2D(0.05, 0.9), 0);
 	pRenderer->add2DGraphicObject(pDirection);
+	C2DText* pTimeText = new C2DText("", Vector2D(0.8, 0.95), 0);
+	pRenderer->add2DGraphicObject(pTimeText);
 
 	Vector3D oldPosition= Vector3D(pWorld->getRobotPos().x(), 0
 		, pWorld->getRobotPos().y());
 	Vector3D targetPosition= Vector3D(pWorld->getRobotPos().x(), 0
 		, pWorld->getRobotPos().y());
 
-	while (!pWorld->robotOverTarget())
+	while (true)
 	{
 		//UPDATE////////////////////
 		////////////////////////////
-		if (decisionTimer.getElapsedTime() > TIME_STEP)
+		if (!pWorld->robotOverTarget())
 		{
-			oldPosition = Vector3D(pWorld->getRobotPos().x(), 0
-				, pWorld->getRobotPos().y());
+			if (decisionTimer.getElapsedTime() > TIME_STEP)
+			{
+				oldPosition = Vector3D(pWorld->getRobotPos().x(), 0
+					, pWorld->getRobotPos().y());
 
-			Position intMovement= pRobotMind->TakeStep();
+				Position intMovement = pRobotMind->TakeStep();
 
-			pDirection->set(pRobotMind->GetLastDirection());
+				pDirection->set(pRobotMind->GetLastDirection());
 
-			targetPosition= oldPosition + Vector3D(intMovement.x(), 0.0, intMovement.y());
-			
-			decisionTimer.start();
+				targetPosition = oldPosition + Vector3D(intMovement.x(), 0.0, intMovement.y());
+
+				decisionTimer.start();
+
+				pStateText->set(pRobotMind->GetState());
+			}
+			else
+			{
+				double u = decisionTimer.getElapsedTime() / TIME_STEP;
+
+				pRobot->setWorldPosition(oldPosition + (targetPosition - oldPosition)*u);
+			}
 		}
 		else
 		{
-			double u = decisionTimer.getElapsedTime() / TIME_STEP;
-
-			pRobot->setWorldPosition(oldPosition + (targetPosition-oldPosition)*u);
+			timeFromStart.stop();
+			pStateText->set("Goal reached!!!");
 		}
 
-		pFPSText->set(pRobotMind->GetState());
+		pTimeText->set(timeFromStart.getElapsedTimeAsString());
+
 
 		t += dt;
 
