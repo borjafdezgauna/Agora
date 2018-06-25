@@ -4,8 +4,5 @@
 
 Direction RobotMind::TowardsGoal()
 {
-	//if (GoalIsAbove())
-	//	return Up;
-
-	return RandomDirection();
+	return Up;
 }
