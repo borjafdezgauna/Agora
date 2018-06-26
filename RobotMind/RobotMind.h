@@ -48,6 +48,7 @@ class RobotMind
 	Direction OppositeDirection(Direction dir);
 	void SetState(State state);
 public:
+	static int Map;
 	RobotMind(World* pWorld);
 	virtual ~RobotMind();
 

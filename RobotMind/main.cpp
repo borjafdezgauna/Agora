@@ -32,7 +32,7 @@ int main(int argc, char** argv)
 	pRenderer->loadScene("robot-mind.scene");
 	pInputHandler = new CFreeCameraInputHandler();
 
-	pWorld= new World("map1.csv");
+	pWorld= new World(string("map") + std::to_string(RobotMind::Map) + string(".csv"));
 	pRobotMind = new RobotMind(pWorld);
 
 	CTimer drawingTimer;
