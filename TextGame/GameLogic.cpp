@@ -31,7 +31,7 @@ bool GameLogic::processInput()
 
 		case '8':
 			m_player2.moveUp(); break;
-		case '2':
+		case '5':
 			m_player2.moveDown(); break;
 		case '6':
 			m_player2.moveRight(); break;
